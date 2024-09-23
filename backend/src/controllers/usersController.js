@@ -118,7 +118,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 })
 
 const getSingleUser = asyncHandler(async (req, res) => {
-  let userId = req.params.id
+  const userId = req.params.id
 
   const user = await User.findById(userId)
     .then((users) => {
@@ -131,7 +131,7 @@ const getSingleUser = asyncHandler(async (req, res) => {
 })
 
 const getSingleUserByUserName = asyncHandler(async (req, res) => {
-  let keyword = req.params.keyword
+  const keyword = req.params.keyword
   await User.find({ username: `${keyword}` })
     .then((users) => {
       res.json(users)
@@ -143,7 +143,7 @@ const getSingleUserByUserName = asyncHandler(async (req, res) => {
 })
 
 const getSingleUserByFirstName = asyncHandler(async (req, res) => {
-  let keyword = req.params.keyword
+  const keyword = req.params.keyword
   await User.find({ first_name: `${keyword}` })
     .then((users) => {
       res.json(users)

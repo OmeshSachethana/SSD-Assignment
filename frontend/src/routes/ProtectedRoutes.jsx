@@ -3,8 +3,10 @@ import Login from "../pages/auth/sign-in"
 
 const useAuth = () => {
     const accessToken = localStorage.getItem('accessToken')
-    let loggedIn = false
-    accessToken ? loggedIn = true : loggedIn
+    // let loggedIn = false
+    // accessToken ? loggedIn = true : loggedIn
+
+    const loggedIn = !!accessToken
 
     return loggedIn
 }
