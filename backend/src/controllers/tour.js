@@ -1,6 +1,7 @@
 import Tour from '../models/tour'
 import { toSuccess } from '../utils'
 import dotenv from 'dotenv'
+import sanitize from 'mongo-sanitize'; //Importing a librart to sanitize inputs
 
 dotenv.config()
 // deploy url
@@ -88,11 +89,14 @@ export const deleteTour = async (req, res) => {
 export const searchTours = async (req, res) => {
   const { term } = req.params
   try {
+	// sanitizethe user input to prevent NoSQL Injection
+	const sanitizedTerm = sanitize(term);
+	
     const tours = await Tour.find({
       $or: [
-        { tourName: { $regex: term, $options: 'i' } }, // Case-insensitive regex search on tourName
-        { tourType: { $regex: term, $options: 'i' } }, // Case-insensitive regex search on tourType
-        { description: { $regex: term, $options: 'i' } } // Case-insensitive regex search on description
+        { tourName: { $regex: sanitizedTerm, $options: 'i' } }, // Case-insensitive regex search on tourName
+        { tourType: { $regex: sanitizedTerm, $options: 'i' } }, // Case-insensitive regex search on tourType
+        { description: { $regex: sanitizedTerm, $options: 'i' } } // Case-insensitive regex search on description
       ]
     })
     return toSuccess({ res, data: tours, message: 'Tours retrieved successfully' })
