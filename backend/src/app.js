@@ -28,7 +28,18 @@ app.use(cors())
 
 app.use(limiter)
 
-app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
+app.use(helmet());
+
+app.use(
+	helmet.contentSecurityPolicy{(
+		directives: {
+			defaultSrc: ["'self'"],
+			scriptSrc: ["'self'", "ceylonvoyages.com"], //Allow scripts from the current domain
+			objectSrc: ["'none'"],
+			upgradeInsecureRequests; [],
+		},
+	})
+);
 
 app.use(compression())
 
